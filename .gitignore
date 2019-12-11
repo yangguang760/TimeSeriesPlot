@@ -1,0 +1,26 @@
+# Created by .ignore support plugin (hsz.mobi)
+/.idea/
+/out/
+/.idea_modules/
+/journal/
+/jounal/
+/logs/
+/target/
+/traderjre/
+*.log
+*.shut
+*.con
+*.jfr
+.ensime
+.ensime_cache
+/project/.ensime
+/*/target/
+/cluster/src/pack/conf/clusterConf/TradeGW.conf
+/cluster/src/pack/conf/tdsTestConf/TradeGW.conf
+/cluster/src/pack/conf/mdsTestConf/QuoteGW.conf
+/project/target/*
+/project/project/target/*
+/*.sh
+/*.html
+/report/
+/connFiles/
