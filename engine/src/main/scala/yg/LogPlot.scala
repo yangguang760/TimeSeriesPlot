@@ -8,10 +8,11 @@ import better.files.File
 
 import scala.collection.JavaConverters._
 import com.typesafe.config.ConfigFactory
-import plotly.{Plotly, Scatter}
+import plotly.{Bar, Plotly, Scatter}
 import plotly.element.AxisReference.{Y1, Y2, Y3, Y4}
-import plotly.element.ScatterMode
-import plotly.layout.{Axis, Layout}
+import plotly.element.{Marker, ScatterMode}
+import plotly.element.Symbol._
+import plotly.layout.{Axis, BarMode, Layout}
 import scalatags.Text.all._
 
 import scala.collection.immutable.Queue
@@ -45,10 +46,35 @@ object LogPlot {
     }
 
 
-    def getMode(x:String) = x match{
-      case "mark" => ScatterMode(ScatterMode.Markers)
-      case _ => ScatterMode(ScatterMode.Lines)
+    def getMode(x:String) = {
+      if(x.startsWith("mark")){
+        ScatterMode(ScatterMode.Markers)
+      }
+      else
+      {
+        ScatterMode(ScatterMode.Lines)
+      }
     }
+
+    def getSymbol(x:String):Marker= {
+      val sp = x.split("-")
+      if(sp.length>2){
+        val symbol = sp(2) match {
+          case "O"=> Circle()
+          case "X"=> Cross()
+          case "D"=> Diamond()
+          case "S"=> Square()
+        }
+        (sp(1).toDouble,symbol)
+        Marker(size=sp(1).toInt,symbol=symbol)
+      }else{
+        Marker(size=1,symbol=Circle())
+      }
+    }
+//      x match{
+//      case "mark" => ScatterMode(ScatterMode.Markers)
+//      case _ => ScatterMode(ScatterMode.Lines)
+//    }
 
     def getY(x:String) = x match {
       case "1" => Y1
@@ -59,14 +85,25 @@ object LogPlot {
 
     val finalMap = indiMap.map(x=>{
       scatterMap.get(x._1).map(y =>
-        Scatter(
-          y.map(_._1),
-          y.map(_._2),
-          y.map(_._3),
-          getMode(x._2._2),
-          name = x._1,
-          yaxis = getY(x._2._1),
-        )
+        if(x._2._2.startsWith("bar")){
+          Bar(
+            y.map(_._1),
+            y.map(_._2),
+            x._1,
+            y.map(_._3),
+            yaxis = getY(x._2._1)
+          )
+        }else{
+          Scatter(
+            y.map(_._1),
+            y.map(_._2),
+            y.map(_._3),
+            getMode(x._2._2),
+            marker = getSymbol(x._2._2),
+            name = x._1,
+            yaxis = getY(x._2._1),
+          )
+        }
       ).get
     }).toSeq
 
