@@ -122,14 +122,8 @@ object engine extends SbtModule{
     ivy"com.typesafe.scala-logging::scala-logging:3.9.2",
     ivy"ch.qos.logback:logback-classic:1.2.3",
     ivy"com.typesafe:config:1.4.0",
-    ivy"com.lihaoyi::pprint:0.5.6",
-    ivy"com.lihaoyi::upickle:0.8.0",
-    ivy"com.lihaoyi::ammonite-ops:1.8.2",
     ivy"com.lihaoyi::scalatags:0.7.0",
-    ivy"org.scala-lang:scala-reflect:2.12.10",
     ivy"com.github.pathikrit::better-files:3.8.0",
-    ivy"com.github.tototoshi::scala-csv:1.3.6",
-    ivy"org.plotly-scala::plotly-render:0.7.2",
-    ivy"com.github.nscala-time::nscala-time:2.22.0"
+    ivy"org.plotly-scala::plotly-render:0.7.2"
 )
 }
